@@ -32,7 +32,7 @@ class Database:
         BaseModel.metadata.create_all(self._engine)
 
     @contextmanager
-    def session(self) -> Callable[..., AbstractContextManager[Session]]:
+    def session(self):
         session: Session = self._session_factory()
         try:
             yield session

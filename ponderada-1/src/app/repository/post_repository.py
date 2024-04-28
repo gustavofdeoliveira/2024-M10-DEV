@@ -1,6 +1,3 @@
-from contextlib import AbstractContextManager
-from typing import Callable
-
 from sqlalchemy.orm import Session
 
 from app.model.post import Post
@@ -9,7 +6,7 @@ from app.schema.post_tag_schema import UpsertPostWithTags
 
 
 class PostRepository(BaseRepository):
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]):
+    def __init__(self, session_factory):
         super().__init__(session_factory, Post)
 
     def create_with_tags(self, schema: UpsertPostWithTags, tags):

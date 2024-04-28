@@ -1,6 +1,3 @@
-from contextlib import AbstractContextManager
-from typing import Callable
-
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, joinedload
 
@@ -10,7 +7,7 @@ from app.util.query_builder import dict_to_sqlalchemy_filter_options
 
 
 class BaseRepository:
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]], model) -> None:
+    def __init__(self, session_factory, model) -> None:
         self.session_factory = session_factory
         self.model = model
 

@@ -1,13 +1,28 @@
-FROM python:3.9-slim
+# Use an official Python runtime as a parent image
+FROM python:3.8
 
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /code
 
-COPY requirements.txt /app/
+# Copy the current directory contents into the container at /code
+COPY ./app /code/app
+COPY migrations /code/migrations
+COPY alembic.ini /code/
+COPY requirements.txt /code/
 
-RUN pip install -r requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app/
+# Make port 8000 available to the world outside this container
+EXPOSE 8000
 
-EXPOSE 5000
+# Define environment variable
+ENV ENV=dev
+ENV DB=postgresql
+ENV DB_USER=postgres
+ENV DB_PASSWORD=postgres123
+ENV DB_HOST=localhost
+ENV DB_PORT=5432
 
-CMD ["python", "app/main.py"]
+# Run app.py when the container launches
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]
