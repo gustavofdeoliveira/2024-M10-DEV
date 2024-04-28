@@ -16,6 +16,15 @@ class AppCreator:
             title=configs.PROJECT_NAME,
             openapi_url=f"{configs.API}/openapi.json",
             version="0.0.1",
+            contact={
+                "name": "Gustavo F. de Oliveira",
+                "url": "https://github.com/gustavofdeoliveira/",
+                "email": "gustavo.oliveira@sou.inteli.edu.br",
+            },
+            license_info={
+                "name": "Apache 2.0",
+                "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
+            },
         )
 
         # set db and container

@@ -15,7 +15,8 @@ class Configs(BaseSettings):
     API: str = "/api"
     API_V1_STR: str = "/api/v1"
     API_V2_STR: str = "/api/v2"
-    PROJECT_NAME: str = "fca-api"
+    PROJECT_NAME: str = "API de Gerenciamento de Post"
+    PROJECT_DESCRIPTION: str = "API com FastAPI para gerenciamento de postagens. Inclui autenticação, autorização e CRUD."
 
 
     PROJECT_ROOT: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
