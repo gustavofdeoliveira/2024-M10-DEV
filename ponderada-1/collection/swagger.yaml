@@ -14,7 +14,7 @@ paths:
           content:
             application/json:
               schema: {}
-  "/api/v1/auth/sign-in":
+  "/auth/sign-in":
     post:
       tags:
         - v1
@@ -40,7 +40,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HTTPValidationError"
-  "/api/v1/auth/sign-up":
+  "/auth/sign-up":
     post:
       tags:
         - v1
@@ -66,7 +66,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/HTTPValidationError"
-  "/api/v1/auth/me":
+  "/auth/me":
     get:
       tags:
         - v1
@@ -82,7 +82,7 @@ paths:
                 "$ref": "#/components/schemas/User"
       security:
         - JWTBearer: []
-  "/api/v1/post":
+  "/post":
     get:
       tags:
         - v1
@@ -176,7 +176,7 @@ paths:
                 "$ref": "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
-  "/api/v1/post/{post_id}":
+  "/post/{post_id}":
     get:
       tags:
         - v1
@@ -268,7 +268,7 @@ paths:
                 "$ref": "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
-  "/api/v1/tag":
+  "/tag":
     get:
       tags:
         - v1
@@ -364,7 +364,7 @@ paths:
                 "$ref": "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
-  "/api/v1/tag/{tag_id}":
+  "/tag/{tag_id}":
     get:
       tags:
         - v1
@@ -459,7 +459,7 @@ paths:
                 "$ref": "#/components/schemas/HTTPValidationError"
       security:
         - JWTBearer: []
-  "/api/v1/user":
+  "/user":
     get:
       tags:
         - v1
@@ -573,7 +573,7 @@ paths:
       security:
         - JWTBearer: []
         - JWTBearer: []
-  "/api/v1/user/{user_id}":
+  "/user/{user_id}":
     get:
       tags:
         - v1
