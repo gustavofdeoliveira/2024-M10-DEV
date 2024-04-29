@@ -1,8 +1,12 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.v1.routes import routers as v1_routers
-from app.api.v2.routes import routers as v2_routers
+
+from app.api.v1.endpoints.auth import router as auth_router
+from app.api.v1.endpoints.post import router as post_router
+from app.api.v1.endpoints.tag import router as tag_router
+from app.api.v1.endpoints.user import router as user_router
+
 from app.core.config import configs
 from app.core.container import Container
 from app.util.class_object import singleton
@@ -46,9 +50,11 @@ class AppCreator:
         @self.app.get("/")
         def root():
             return "service is working"
-
-        self.app.include_router(v1_routers, prefix=configs.API_V1_STR)
-        self.app.include_router(v2_routers, prefix=configs.API_V2_STR)
+        
+        self.app.include_router(auth_router)
+        self.app.include_router(user_router)
+        self.app.include_router(tag_router)
+        self.app.include_router(post_router)
 
 
 app_creator = AppCreator()

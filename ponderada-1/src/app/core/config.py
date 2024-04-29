@@ -14,7 +14,6 @@ class Configs(BaseSettings):
     ENV: str = os.getenv("ENV", "dev")
     API: str = "/api"
     API_V1_STR: str = "/api/v1"
-    API_V2_STR: str = "/api/v2"
     PROJECT_NAME: str = "API de Gerenciamento de Post"
     PROJECT_DESCRIPTION: str = "API com FastAPI para gerenciamento de postagens. Inclui autenticação, autorização e CRUD."
 
@@ -26,7 +25,7 @@ class Configs(BaseSettings):
     DATE_FORMAT: str = "%Y-%m-%d"
 
     # auth
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "")
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "3ca0f510a0208d40b7af66e7eae93d66e08929edcceec30538e478e5cf6bf994")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 60 minutes * 24 hours * 30 days = 30 days
 
     # CORS
