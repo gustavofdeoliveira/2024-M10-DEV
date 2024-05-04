@@ -11,10 +11,29 @@ services:
     ports:
       - "5432:5432"
 
-  api:
-    build: ./src
+  # api_sync:
+  #   build: ./src/sincrona
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     ENV: dev
+  #     DB_USER: postgres
+  #     DB_PASSWORD: postgres123
+  #     DB_HOST: db
+  #     DB_PORT: 5432
+  #   command: >
+  #     /bin/sh -c "
+  #       alembic upgrade head &&
+  #       uvicorn app.main:app --host 0.0.0.0 --reload
+  #     "
+  #   restart: always
+
+  api_async:
+    build: ./src/assincrona
     ports:
-      - "8000:8000"
+      - "8001:8001"
     depends_on:
       - db
     environment:

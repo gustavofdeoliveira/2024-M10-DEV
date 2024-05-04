@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
@@ -14,7 +15,7 @@ from app.util.class_object import singleton
 
 @singleton
 class AppCreator:
-    def __init__(self):
+   async def __init__(self):
         # set app default
         self.app = FastAPI(
             title=configs.PROJECT_NAME,
@@ -56,8 +57,9 @@ class AppCreator:
         self.app.include_router(tag_router)
         self.app.include_router(post_router)
 
+async def main():
+    app_creator = AppCreator()
+   
 
-app_creator = AppCreator()
-app = app_creator.app
-db = app_creator.db
-container = app_creator.container
+if __name__ == "__main__":
+    asyncio.run(main())
