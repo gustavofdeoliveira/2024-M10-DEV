@@ -77,9 +77,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        working-directory: ./ponderada-1/src/sincrona/
+        working-directory: ./ponderada-1/src/sincrona/src/
         run: pip install -r requirements.txt
 
       - name: pytest
-        working-directory: ./ponderada-1/src/sincona/
+        working-directory: ./ponderada-1/src/sincona/src/
         run: pytest
