@@ -42,7 +42,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: pytest
-        working-directory: ponderada-1/src/assincona/
+        working-directory: ponderada-1/src/assincrona/
         run: pytest
 
   test-sincrona:
@@ -81,5 +81,5 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: pytest
-        working-directory: ponderada-1/src/sincona/
+        working-directory: ponderada-1/src/sincrona/
         run: pytest
