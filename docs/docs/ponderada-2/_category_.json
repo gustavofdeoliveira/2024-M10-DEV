@@ -1,0 +1,8 @@
+{
+  "label": "Ponderada 2",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Desenvolvimento de um APP integrado com a API RESTful desenvolvida no projeto da Ponderada 1"
+  }
+}
