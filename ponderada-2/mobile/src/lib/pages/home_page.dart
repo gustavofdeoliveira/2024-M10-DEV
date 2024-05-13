@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/controller/home_controller.dart';
+import 'package:mobile/pages/edit_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,14 +16,56 @@ class _HomePageState extends State<HomePage> {
     return Container();
   }
 
+  Future<void> refreshList() async {
+    await Future.delayed(Duration(seconds: 2)); // Simulate network delay
+
+    setState(() {
+      controller.start();
+      // Reversing items to simulate data change
+      controller.tags = controller.tags.reversed.toList();
+    });
+  }
+
   _sucess() {
-    return ListView.builder(
-      itemCount: controller.tags.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Tag: ${controller.tags[index].name}'),
-        );
-      },
+    return RefreshIndicator(
+      onRefresh: refreshList,
+      child: ListView.builder(
+        itemCount: controller.tags.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('Tag: ${controller.tags[index].name}'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min, // Importante para evitar overflow
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.edit, color: Colors.blue),
+                  onPressed: () {
+                    // Chamar a função de editar
+                    // editTag(controller.tags[index]);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditPage(
+                            id: controller.tags[index].id ?? 0,
+                            name: controller.tags[index].name ?? '',
+                            description:
+                                controller.tags[index].description ?? ''),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    // Chamar a função de excluir
+                    controller.delete(context, controller.tags[index].id);
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 

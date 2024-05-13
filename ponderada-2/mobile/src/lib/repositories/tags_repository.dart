@@ -89,12 +89,40 @@ class TagsRepository {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     try {
-      final response = await http.get(
-        Uri.parse('$url/tag?tag_id=$idTag'), // Corrected endpoint
+      final response = await http.delete(
+        Uri.parse('$url/tag/$idTag'), // Corrected endpoint
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
         },
+      );
+      if (response.statusCode == 200) {
+        final tagResponse = Tag.fromJson(json.decode(response.body));
+        return tagResponse;
+      }
+      return Tag();
+    } catch (e) {
+      print(e);
+      return Tag();
+    }
+  }
+
+  Future<Tag> updateTag(idTag, name, description) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final userToken = prefs.getString('UserToken') ?? '';
+    try {
+      final response = await http.patch(
+        Uri.parse('$url/tag/$idTag'), // Corrected endpoint
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode({
+          'user_token': userToken,
+          'name': name,
+          'description': description,
+        }),
       );
       if (response.statusCode == 200) {
         final tagResponse = Tag.fromJson(json.decode(response.body));
