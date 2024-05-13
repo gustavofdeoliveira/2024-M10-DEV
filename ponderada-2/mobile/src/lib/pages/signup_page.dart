@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:mobile/pages/home_page.dart';
-import 'package:mobile/pages/login_page.dart';
-
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -31,12 +28,7 @@ class _SignupPageState extends State<SignupPage> {
     if (response.statusCode == 200) {
       setState(() {
         var data = json.decode(response.body);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(userData: data),
-          ),
-        );
+        Navigator.of(context).pushNamed('/home');
       });
     }
   }
@@ -101,12 +93,7 @@ class _SignupPageState extends State<SignupPage> {
                     const Text('Have an account?'),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamed('/login');
                       },
                       child: const Text('Sign in'),
                     ),

@@ -1,25 +1,25 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:mobile/controller/login_controller.dart';
+import 'package:mobile/controller/Create_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class CreatePage extends StatefulWidget {
+  const CreatePage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<CreatePage> createState() => _CreatePageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String email = '';
-  String password = '';
+class _CreatePageState extends State<CreatePage> {
+  String name = '';
+  String description = '';
 
-  final controller = LoginController();
+  final controller = CreateController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in'),
+        title: const Text('Create Tag'),
       ),
       body: SingleChildScrollView(
         child: SizedBox(
@@ -32,46 +32,31 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 TextField(
                   onChanged: (text) {
-                    email = text;
+                    name = text;
                   },
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: Icon(Icons.email),
+                    labelText: 'Name',
                     border: OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 8),
                 TextField(
                   onChanged: (text) {
-                    password = text;
+                    description = text;
                   },
                   decoration: const InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: Icon(Icons.lock),
+                    labelText: 'Description',
                     border: OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/home');
+                    controller.create(context, name, description);
                   },
-                  child: const Text('Login'),
+                  child: const Text('Create'),
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Don\'t have an account?'),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/signup');
-                      },
-                      child: const Text('Sign up'),
-                    ),
-                  ],
-                )
               ],
             ),
           ),

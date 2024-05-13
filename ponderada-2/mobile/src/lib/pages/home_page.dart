@@ -1,94 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/controller/settings_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile/controller/home_controller.dart';
 
 class HomePage extends StatefulWidget {
-  final dynamic userData;
-
-  HomePage({Key? key, required this.userData}) : super(key: key);
+  const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
-  late final dynamic
-      userData; // Declare userData with late as it's initialized in initState.
-  int counter = 0;
+class _HomePageState extends State<HomePage> {
+  final controller = HomeController();
+
+  _start() {
+    return Container();
+  }
+
+  _sucess() {
+    return ListView.builder(
+      itemCount: controller.tags.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text('Tag: ${controller.tags[index].name}'),
+        );
+      },
+    );
+  }
+
+  _error() {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          setState(() {});
+        },
+        child: const Text('Try again'),
+      ),
+    );
+  }
+
+  _loading() {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  stateManagement(state) {
+    switch (state) {
+      case HomeState.start:
+        return _start();
+      case HomeState.loading:
+        return _loading();
+      case HomeState.success:
+        return _sucess();
+      case HomeState.error:
+        return _error();
+      default:
+        return _start();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    loadUserData(); // Initialize userData from the widget.
-    // Add any additional initializations here if necessary.
-  }
-
-  Future<void> loadUserData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? savedData = prefs.getString('userData');
-    setState(() {
-      userData = savedData ?? "No data saved";
-    });
+    controller.start();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text('Tags Page'),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Contador: ${userData.name}'),
-            CustomSwitcher(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.red,
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.green,
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.blue,
-                ),
-              ],
-            )
-          ],
-        ),
+      body: AnimatedBuilder(
+        animation: controller.state,
+        builder: (context, child) {
+          return stateManagement(controller.state.value);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          setState(() {
-            counter++;
-          });
+          Navigator.pushNamed(context, '/create-tag');
         },
       ),
-    );
-  }
-}
-
-class CustomSwitcher extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: AppController.instance.isDarkTheme,
-      onChanged: (value) {
-        AppController.instance.changeTheme();
-      },
     );
   }
 }

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/controller/settings_controller.dart';
+import 'package:mobile/pages/create_tag_page.dart';
+import 'package:mobile/pages/home_page.dart';
 import 'package:mobile/pages/login_page.dart';
+import 'package:mobile/pages/signup_page.dart';
 
 class AppWidget extends StatelessWidget {
+  const AppWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -16,7 +21,14 @@ class AppWidget extends StatelessWidget {
                 ? Brightness.dark
                 : Brightness.light,
           ),
-          home: LoginPage(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const LoginPage(),
+            '/login': (context) => const LoginPage(),
+            '/signup': (context) => const SignupPage(),
+            '/home': (context) => const HomePage(),
+            '/create-tag': (context) => const CreatePage(),
+          },
         );
       },
     );
