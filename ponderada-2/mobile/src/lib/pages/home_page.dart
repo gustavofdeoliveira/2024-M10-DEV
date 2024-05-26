@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> refreshList() async {
-    await Future.delayed(Duration(seconds: 2)); // Simulate network delay
+    await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
 
     setState(() {
       controller.start();
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min, // Importante para evitar overflow
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.edit, color: Colors.blue),
+                  icon: const Icon(Icons.edit, color: Colors.blue),
                   onPressed: () {
                     // Chamar a função de editar
                     // editTag(controller.tags[index]);
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red),
+                  icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
                     // Chamar a função de excluir
                     controller.delete(context, controller.tags[index].id);

@@ -15,6 +15,7 @@ class CreateController {
     state.value = CreateState.loading;
     try {
       tag = await _tagsRepository.createTag(name, description);
+      // ignore: use_build_context_synchronously
       await Navigator.pushReplacementNamed(context, '/home');
       state.value = CreateState.success;
     } catch (e) {

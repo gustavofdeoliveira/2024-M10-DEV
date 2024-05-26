@@ -27,7 +27,7 @@ class _SignupPageState extends State<SignupPage> {
     );
     if (response.statusCode == 200) {
       setState(() {
-        var data = json.decode(response.body);
+        json.decode(response.body);
         Navigator.of(context).pushNamed('/home');
       });
     }

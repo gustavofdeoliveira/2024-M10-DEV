@@ -6,14 +6,14 @@ class EditPage extends StatefulWidget {
   final String description;
   final int id;
 
-  EditPage(
-      {Key? key,
+  const EditPage(
+      {super.key,
       required this.id,
       required this.name,
-      required this.description})
-      : super(key: key);
+      required this.description});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EditPageState createState() => _EditPageState();
 }
 
@@ -41,7 +41,7 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Information"),
+        title: const Text("Edit Information"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,24 +50,24 @@ class _EditPageState extends State<EditPage> {
           children: <Widget>[
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Name',
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextField(
               controller: _descriptionController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Description',
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 controller.update(context, widget.id, _nameController.text,
                     _descriptionController.text);
               },
-              child: Text('Save Changes'),
+              child: const Text('Save Changes'),
             ),
           ],
         ),

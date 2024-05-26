@@ -15,6 +15,7 @@ class LoginController {
     state.value = LoginState.loading;
     try {
       user = await _userRepository.fetchLogin(email, password);
+      // ignore: use_build_context_synchronously
       await Navigator.pushReplacementNamed(context, '/home');
       state.value = LoginState.success;
     } catch (e) {

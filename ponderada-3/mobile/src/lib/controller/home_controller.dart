@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/models/tags.dart';
-import 'package:mobile/repositories/photo_repository.dart';
+import 'package:mobile/services/photo_repository.dart';
 
 class HomeController {
   List<Tag> tags = [];
@@ -35,6 +35,7 @@ class HomeController {
     state.value = HomeState.loading;
     try {
       tag = await _tagsRepository.updateTag(idTag, name, description);
+      // ignore: use_build_context_synchronously
       await Navigator.pushReplacementNamed(context, '/home');
       state.value = HomeState.success;
     } catch (e) {

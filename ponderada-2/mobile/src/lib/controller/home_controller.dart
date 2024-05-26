@@ -35,6 +35,7 @@ class HomeController {
     state.value = HomeState.loading;
     try {
       tag = await _tagsRepository.updateTag(idTag, name, description);
+      // ignore: use_build_context_synchronously
       await Navigator.pushReplacementNamed(context, '/home');
       state.value = HomeState.success;
     } catch (e) {

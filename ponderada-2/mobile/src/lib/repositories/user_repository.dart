@@ -9,7 +9,7 @@ class UserRepository {
   Future<User> fetchLogin(email, password) async {
     try {
       final response = await http.post(
-        Uri.parse('${url}/auth/sign-in'), // Corrected endpoint
+        Uri.parse('$url/auth/sign-in'), // Corrected endpoint
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email__eq': email, // Corrected field name

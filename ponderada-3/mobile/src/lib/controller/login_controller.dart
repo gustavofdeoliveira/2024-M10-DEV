@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/models/user.dart';
-import 'package:mobile/repositories/user_repository.dart';
+import 'package:mobile/services/user_repository.dart';
 
 class LoginController {
   var user = User();
@@ -15,6 +15,7 @@ class LoginController {
     state.value = LoginState.loading;
     try {
       user = await _userRepository.fetchLogin(email, password);
+      // ignore: use_build_context_synchronously
       await Navigator.pushReplacementNamed(context, '/home');
       state.value = LoginState.success;
     } catch (e) {
