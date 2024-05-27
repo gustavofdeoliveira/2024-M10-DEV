@@ -13,8 +13,8 @@ class Configs(BaseSettings):
     # base
     ENV: str = os.getenv("ENV", "dev")
     API: str = "/api"
-    API_V1_STR: str = "/api/v1"
-    PROJECT_NAME: str = "API de Gerenciamento de Autenticação"
+    API_V1_STR: str = "/api/v2"
+    PROJECT_NAME: str = "API de Gerenciamento de Fotos"
     PROJECT_DESCRIPTION: str = "API com FastAPI para gerenciamento de postagens. Inclui autenticação, autorização e CRUD."
 
 

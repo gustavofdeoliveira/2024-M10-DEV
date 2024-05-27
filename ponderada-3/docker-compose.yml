@@ -12,7 +12,26 @@ services:
       - "5432:5432"
 
   api_auth:
-    build: ./backend/
+    build: ./microsservices/user/
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+    environment:
+      ENV: dev
+      DB_USER: postgres
+      DB_PASSWORD: postgres123
+      DB_HOST: db
+      DB_PORT: 5432
+    command: >
+      /bin/sh -c "
+        alembic upgrade head &&
+        uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+      "
+    restart: always
+
+  api_photo:
+    build: ./microsservices/photo/
     ports:
       - "8000:8000"
     depends_on:
@@ -26,7 +45,7 @@ services:
     command: >
       /bin/sh -c "
         alembic upgrade head &&
-        uvicorn app.main:app --host 0.0.0.0 --reload
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
       "
     restart: always
 
