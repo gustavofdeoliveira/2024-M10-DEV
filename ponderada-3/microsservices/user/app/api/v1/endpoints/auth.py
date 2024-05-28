@@ -1,6 +1,6 @@
+import logging
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
-
 from app.core.container import Container
 from app.core.dependencies import get_current_active_user
 from app.schema.auth_schema import SignIn, SignInResponse, SignUp
@@ -12,20 +12,41 @@ router = APIRouter(
     tags=["auth"],
 )
 
+# Configuração do logger
+logger = logging.getLogger(__name__)
+
+
 
 @router.post("/sign-in", response_model=SignInResponse)
 @inject
 async def sign_in(user_info: SignIn, service: AuthService = Depends(Provide[Container.auth_service])):
-    return service.sign_in(user_info)
-
+    logger.info(f"Attempting to sign in user: {user_info.username}")
+    try:
+        result = service.sign_in(user_info)
+        logger.info(f"User {user_info.username} signed in successfully")
+        return result
+    except Exception as e:
+        logger.error(f"Error signing in user {user_info.username}: {str(e)}")
+        raise
 
 @router.post("/sign-up", response_model=User)
 @inject
 async def sign_up(user_info: SignUp, service: AuthService = Depends(Provide[Container.auth_service])):
-    return service.sign_up(user_info)
-
+    logger.info(f"Attempting to sign up user: {user_info.username}")
+    try:
+        result = service.sign_up(user_info)
+        logger.info(f"User {user_info.username} signed up successfully")
+        return result
+    except Exception as e:
+        logger.error(f"Error signing up user {user_info.username}: {str(e)}")
+        raise
 
 @router.get("/me", response_model=User)
 @inject
 async def get_me(current_user: User = Depends(get_current_active_user)):
-    return current_user
+    logger.info(f"Fetching current user: {current_user.username}")
+    try:
+        return current_user
+    except Exception as e:
+        logger.error(f"Error fetching current user: {str(e)}")
+        raise

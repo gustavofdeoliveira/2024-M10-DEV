@@ -6,8 +6,6 @@ WORKDIR /code
 
 # Copy the current directory contents into the container at /code
 COPY ./app /code/app
-COPY migrations /code/migrations
-COPY alembic.ini /code/
 COPY requirements.txt /code/
 
 # Install any needed packages specified in requirements.txt

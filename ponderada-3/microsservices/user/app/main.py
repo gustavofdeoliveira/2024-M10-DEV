@@ -8,7 +8,18 @@ from app.api.v1.endpoints.user import router as user_router
 from app.core.config import configs
 from app.core.container import Container
 from app.util.class_object import singleton
+import logging
 
+# Configuração básica do logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Adicionar handler para exibir logs no console
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
 
 @singleton
 class AppCreator:
@@ -57,3 +68,13 @@ app_creator = AppCreator()
 app = app_creator.app
 db = app_creator.db
 container = app_creator.container
+
+@app.on_event("startup")
+async def startup_event():
+    container.init_resources()
+    container.wire(modules=[__name__])
+    logger.info("Application startup")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    logger.info("Application shutdown")
