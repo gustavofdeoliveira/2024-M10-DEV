@@ -1,138 +1,79 @@
-// @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
-// There are various equivalent ways to declare your Docusaurus config.
-// See: https://docusaurus.io/docs/api/docusaurus-config
-
-import {themes as prismThemes} from 'prism-react-renderer';
-
-const repoName = '2024-M10-DEV';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Atividades Ponderadas Módulo 10',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
-  
-  // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: `/${repoName}`,
+	title: '2024-M10-DEV',
+	tagline: '2024-M10-DEV',
+	favicon: 'static/img/docusaurus.png',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+	// Set the production url of your site here
+	url: 'https://2024-M10-DEV.github.io/',
+	// Set the /<baseUrl>/ pathname under which your site is served
+	// For GitHub pages deployment, it is often '/<projectName>/'
+	baseUrl: '/2024-M10-DEV/',
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+	// GitHub pages deployment config.
+	// If you aren't using GitHub pages, you don't need these.
+	organizationName: '2024-M10-DEV', // Usually your GitHub org/user name.
+	projectName: 'docusaurus', // Usually your repo name.
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
-  },
+	onBrokenLinks: 'throw',
+	onBrokenMarkdownLinks: 'warn',
 
-  presets: [
-    [
-      'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
-        docs: {
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
-      }),
-    ],
-  ],
+	// Even if you don't use internationalization, you can use this field to set
+	// useful metadata like html lang. For example, if your site is Chinese, you
+	// may want to replace "en" with "zh-Hans".
+	i18n: {
+		defaultLocale: 'en',
+		locales: ['en'],
+	},
 
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
-      navbar: {
-        items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
-          },
+	presets: [
+		[
+			'classic',
+			/** @type {import('@docusaurus/preset-classic').Options} */
+			({
+				docs: {
+					routeBasePath: '/',
+				},
+				theme: {
+					customCss: './src/css/custom.css',
+				},
+			}),
+		],
+	],
 
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Documentação',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
-    }),
+	themeConfig:
+		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+		({
+			// Replace with your project's social card
+			image: 'img/docusaurus-social-card.jpg',
+			navbar: {
+				title: 'Introduction',
+
+				logo: {
+					alt: 'Home Logo',
+					src: 'img/docusaurus.png',
+				},
+				items: [
+					{
+						href: 'https://github.com/gustavofdeoliveira/2024-M10-DEV',
+						label: 'GitHub',
+						position: 'right',
+					},
+				],
+			},
+			footer: {
+				style: 'dark',
+				links: [],
+				copyright: `Copyright © ${new Date().getFullYear()}, Inc. Built with Docusaurus.`,
+			},
+			prism: {
+				theme: prismThemes.github,
+				darkTheme: prismThemes.dracula,
+				additionalLanguages: ['bash', 'diff', 'json'],
+			},
+		}),
 };
 
 export default config;
