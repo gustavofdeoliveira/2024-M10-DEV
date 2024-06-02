@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/home');
+                    controller.start(context, email, password);
                   },
                   child: const Text('Login'),
                 ),

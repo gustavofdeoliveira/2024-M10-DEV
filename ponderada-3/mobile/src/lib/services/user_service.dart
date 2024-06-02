@@ -5,7 +5,7 @@ import 'package:mobile/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
-  final String url = 'http://10.0.2.2:8000';
+  final String url = 'http://192.168.224.1:7000/auth';
   final Logger _logger = Logger('UserRepository');
 
   UserRepository() {
@@ -23,7 +23,7 @@ class UserRepository {
   Future<User> fetchLogin(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('$url/auth/sign-in'),
+        Uri.parse('$url/sign-in'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email__eq': email,
@@ -40,6 +40,28 @@ class UserRepository {
           });
           return userResponse;
         }
+      }
+      return User();
+    } catch (e) {
+      _logger.severe('Error in fetchLogin: $e');
+      return User();
+    }
+  }
+
+  Future<User> fetchSignUp(String name, String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$url/sign-up'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': name,
+          'email': email,
+          'password': password,
+        }),
+      );
+      if (response.statusCode == 200) {
+        final userResponse = User.fromJson(json.decode(response.body));
+        return userResponse;
       }
       return User();
     } catch (e) {

@@ -24,7 +24,7 @@ async def get_photo_list(
 ):
     logger.info(f"Fetching photo list with query: {find_query}")
     result = service.get_list(find_query)
-    logger.info(f"Fetched {len(result.photos)} photos")
+    logger.info(f"Fetched {len(result)} photos")
     return result
 
 @router.get("/{photo_id}", response_model=Photo)

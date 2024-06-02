@@ -1,6 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile/controller/home_controller.dart';
-import 'package:mobile/pages/photo_page.dart';
+import 'package:mobile/pages/imaga_page.dart';
+import 'package:mobile/services/local_notification.dart';
+import 'package:mobile/services/photo_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,9 +15,64 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
+  final ImagePicker _picker = ImagePicker();
+  final PhotoService _imageService = PhotoService();
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    LocalNotificationService.initialize();
+    controller.start();
+  }
 
   _start() {
     return Container();
+  }
+
+  Future<void> _takePhoto() async {
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+      if (pickedFile != null) {
+        setState(() {
+          isLoading = true;
+        });
+        await LocalNotificationService.showTextNotification(
+          title: 'Envio de Imagem',
+          body: 'A imagem está sendo enviada.',
+        );
+
+        var pathImage = await _imageService.uploadImage(
+            File(pickedFile.path), pickedFile.path, pickedFile.name);
+
+        await LocalNotificationService.showTextNotification(
+          title: 'Upload de Imagem',
+          body: 'Sua imagem foi processada com sucesso!',
+        );
+
+        _viewPhoto(pathImage);
+      }
+    } catch (e) {
+      print('Failed to take photo: $e');
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to take photo')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _viewPhoto(String filename) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImagePathWidget(imageUrl: filename),
+      ),
+    );
   }
 
   Future<void> refreshList() async {
@@ -22,43 +81,32 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       controller.start();
       // Reversing items to simulate data change
-      controller.tags = controller.tags.reversed.toList();
+      controller.photos = controller.photos.reversed.toList();
     });
   }
 
-  _sucess() {
+  _success() {
     return RefreshIndicator(
       onRefresh: refreshList,
       child: ListView.builder(
-        itemCount: controller.tags.length,
+        itemCount: controller.photos.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text('Tag: ${controller.tags[index].name}'),
+            title: Text('Photo: ${controller.photos[index].fileName}'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min, // Importante para evitar overflow
               children: <Widget>[
                 IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.blue),
+                  icon: const Icon(Icons.visibility, color: Colors.blue),
                   onPressed: () {
-                    // Chamar a função de editar
-                    // editTag(controller.tags[index]);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditPage(
-                            id: controller.tags[index].id ?? 0,
-                            name: controller.tags[index].name ?? '',
-                            description:
-                                controller.tags[index].description ?? ''),
+                        builder: (context) => ImagePathWidget(
+                          imageUrl: controller.photos[index].url ?? '',
+                        ),
                       ),
                     );
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    // Chamar a função de excluir
-                    controller.delete(context, controller.tags[index].id);
                   },
                 ),
               ],
@@ -93,7 +141,7 @@ class _HomePageState extends State<HomePage> {
       case HomeState.loading:
         return _loading();
       case HomeState.success:
-        return _sucess();
+        return _success();
       case HomeState.error:
         return _error();
       default:
@@ -102,16 +150,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    controller.start();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tags Page'),
+        title: const Text('Photos Page'),
       ),
       body: AnimatedBuilder(
         animation: controller.state,
@@ -120,10 +162,8 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.pushNamed(context, '/create-tag');
-        },
+        onPressed: _takePhoto,
+        child: const Icon(Icons.camera),
       ),
     );
   }

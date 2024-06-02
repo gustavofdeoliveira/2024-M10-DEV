@@ -1,42 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/models/tags.dart';
-import 'package:mobile/services/photo_repository.dart';
+import 'package:mobile/models/photo.dart';
+
+import 'package:mobile/services/photo_service.dart';
 
 class HomeController {
-  List<Tag> tags = [];
-  var tag = Tag();
-  final TagsRepository _tagsRepository;
+  List<Photo> photos = [];
+  var photo = Photo();
+  final PhotoService _photoService;
   final state = ValueNotifier<HomeState>(HomeState.start);
 
-  HomeController([TagsRepository? tagsRepository])
-      : _tagsRepository = tagsRepository ?? TagsRepository();
+  HomeController([PhotoService? photoService])
+      : _photoService = photoService ?? PhotoService();
 
   Future start() async {
     state.value = HomeState.loading;
     try {
-      tags = await _tagsRepository.fetchTags();
-      state.value = HomeState.success;
-    } catch (e) {
-      state.value = HomeState.error;
-    }
-  }
-
-  Future delete(BuildContext context, idTag) async {
-    state.value = HomeState.loading;
-    try {
-      tag = await _tagsRepository.deleteTag(idTag);
-      state.value = HomeState.success;
-    } catch (e) {
-      state.value = HomeState.error;
-    }
-  }
-
-  Future update(BuildContext context, idTag, name, description) async {
-    state.value = HomeState.loading;
-    try {
-      tag = await _tagsRepository.updateTag(idTag, name, description);
-      // ignore: use_build_context_synchronously
-      await Navigator.pushReplacementNamed(context, '/home');
+      photos = await _photoService.fetchTags();
       state.value = HomeState.success;
     } catch (e) {
       state.value = HomeState.error;

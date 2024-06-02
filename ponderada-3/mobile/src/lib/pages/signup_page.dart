@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mobile/controller/login_controller.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -15,23 +17,7 @@ class _SignupPageState extends State<SignupPage> {
   String email = '';
   String password = '';
 
-  Future<void> fetchData() async {
-    final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/auth/sign-up'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'name': name,
-        'email': email,
-        'password': password,
-      }),
-    );
-    if (response.statusCode == 200) {
-      setState(() {
-        json.decode(response.body);
-        Navigator.of(context).pushNamed('/home');
-      });
-    }
-  }
+  final controller = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +69,9 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: fetchData,
+                  onPressed: () {
+                    controller.signup(context, name, email, password);
+                  },
                   child: const Text('Sing up'),
                 ),
                 const SizedBox(height: 16),

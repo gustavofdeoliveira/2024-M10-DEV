@@ -1,23 +1,24 @@
-class Tag {
-  String? userToken;
-  String? name;
-  String? description;
+class Photo {
+  String? fileName;
   int? id;
+  String? url;
+  String? userToken;
   String? createdAt;
   String? updatedAt;
 
-  Tag(
-      {this.userToken,
-      this.name,
-      this.description,
-      this.id,
-      this.createdAt,
-      this.updatedAt});
+  Photo({
+    this.fileName,
+    this.id,
+    this.url,
+    this.userToken,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-  Tag.fromJson(Map<String, dynamic> json) {
+  Photo.fromJson(Map<String, dynamic> json) {
     userToken = json['user_token'];
-    name = json['name'];
-    description = json['description'];
+    fileName = json['file_name'];
+    url = json['url'];
     id = json['id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -26,8 +27,8 @@ class Tag {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['user_token'] = userToken;
-    data['name'] = name;
-    data['description'] = description;
+    data['file_name'] = fileName;
+    data['url'] = url;
     data['id'] = id;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
