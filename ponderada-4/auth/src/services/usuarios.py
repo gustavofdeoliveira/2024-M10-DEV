@@ -2,9 +2,9 @@
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from repository.usuarios import UsuarioRepository
-from models.usuarios import Usuario
-from schemas.usuarios import Usuario as UsuarioSchema
+from src.repository.usuarios import UsuarioRepository
+from src.models.usuarios import Usuario
+from src.schemas.usuarios import Usuario as UsuarioSchema
 
 class UsuarioService:
     def __init__(self, db: Session):

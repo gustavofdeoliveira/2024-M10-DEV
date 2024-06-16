@@ -1,7 +1,7 @@
 # src/main.py
 
 from fastapi import FastAPI, Request
-from routers import usuarios, produtos
+from routers import compra
 from logging_config import LoggerSetup
 import logging
 
@@ -13,8 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 app = FastAPI()
 
-app.include_router(usuarios.router)
-app.include_router(produtos.router)
+app.include_router(compra.router)
 
 @app.get("/")
 async def root(request:Request):

@@ -1,6 +1,6 @@
 # src/repository/produtos.py
 
-from models.produtos import Produto
+from src.models.produtos import Produto
 from sqlalchemy.orm import Session
 from datetime import datetime
 

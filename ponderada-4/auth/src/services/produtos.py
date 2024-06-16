@@ -2,9 +2,9 @@
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from repository.produtos import ProdutoRepository
-from models.produtos import Produto
-from schemas.produtos import Produto as ProdutoSchema
+from src.repository.produtos import ProdutoRepository
+from src.models.produtos import Produto
+from src.schemas.produtos import Produto as ProdutoSchema
 
 class ProdutoService:
     def __init__(self, db: Session):

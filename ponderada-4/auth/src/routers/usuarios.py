@@ -2,9 +2,9 @@
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from schemas.usuarios import Usuario as UsuarioSchema
-from services.usuarios import UsuarioService
-from databases import database
+from src.schemas.usuarios import Usuario as UsuarioSchema
+from src.services.usuarios import UsuarioService
+from src.databases import database
 import logging
 
 #Cria o logger para o módulo

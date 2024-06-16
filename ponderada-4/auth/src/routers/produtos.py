@@ -2,9 +2,9 @@
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from schemas.produtos import Produto as ProdutoSchema
-from services.produtos import ProdutoService
-from databases import database
+from src.schemas.produtos import Produto as ProdutoSchema
+from src.services.produtos import ProdutoService
+from src.databases import database
 import logging
 
 LOGGER = logging.getLogger(__name__)
