@@ -1,7 +1,7 @@
 import logging
 from fastapi import FastAPI, Request
-from logging_config import LoggerSetup
-from routers.usuarios import usuarios
+from src.logging_config import LoggerSetup
+from src.routers import usuarios
 
 
 # Cria um logger raiz

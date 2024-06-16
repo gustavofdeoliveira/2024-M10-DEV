@@ -1,6 +1,6 @@
 # src/repository/usuarios.py
 
-from models.usuarios import Usuario
+from src.models.usuarios import Usuario
 from sqlalchemy.orm import Session
 from datetime import datetime
 

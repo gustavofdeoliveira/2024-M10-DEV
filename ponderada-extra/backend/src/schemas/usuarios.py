@@ -8,8 +8,8 @@ class Usuario(BaseModel):
     nome: str
     email: str
     senha: str
-    data_criacao: datetime
-    data_modificacao: datetime
+    criado_em: datetime
+    atualizado_em: datetime
 
     class Config:
         orm_mode = True

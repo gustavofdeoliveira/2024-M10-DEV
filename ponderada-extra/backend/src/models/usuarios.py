@@ -10,8 +10,8 @@ class Usuario(Base):
     nome = Column(String)
     email = Column(String)
     senha = Column(String)
-    data_criacao = Column(DateTime)
-    data_modificacao = Column(DateTime)
+    criado_em = Column(DateTime)
+    atualizado_em = Column(DateTime)
 
     def __repr__(self):
-        return f"<Usuario(nome='{self.nome}', email='{self.email}, id={self.id}', criado_em='{self.data_criacao}', modificado_em='{self.data_modificacao}')>"
+        return f"<Usuario(nome='{self.nome}', email='{self.email}, id={self.id}', criado_em='{self.criado_em}', atualizado_em='{self.atualizado_em}')>"
