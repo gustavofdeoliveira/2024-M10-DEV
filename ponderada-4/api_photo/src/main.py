@@ -1,25 +1,19 @@
+import logging
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-
-from app.api.v1.endpoints.auth import router as auth_router
-from app.api.v1.endpoints.user import router as user_router
+from app.api.v1.endpoints.photo import router as photo_router
 
 from app.core.config import configs
 from app.core.container import Container
 from app.util.class_object import singleton
-import logging
+from logging_config import LoggerSetup
 
 # Configuração básica do logger
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger_setup = LoggerSetup()
 
-# Adicionar handler para exibir logs no console
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
+# Adiciona o logger para o módulo
+LOGGER = logging.getLogger(__name__)
 
 @singleton
 class AppCreator:
@@ -60,8 +54,7 @@ class AppCreator:
         def root():
             return "service is working"
         
-        self.app.include_router(auth_router)
-        self.app.include_router(user_router)
+        self.app.include_router(photo_router)
 
 
 app_creator = AppCreator()
@@ -71,10 +64,11 @@ container = app_creator.container
 
 @app.on_event("startup")
 async def startup_event():
+    print("Starting up")
     container.init_resources()
     container.wire(modules=[__name__])
-    logger.info("Application startup")
+    LOGGER.info("Application startup")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    logger.info("Application shutdown")
+    LOGGER.info("Application shutdown")
