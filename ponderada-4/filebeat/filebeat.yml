@@ -19,7 +19,7 @@ filebeat.inputs:
   scan_frequency: 1s
   enabled: true
   paths:
-    - /src/logs/*
+    - ../src/logs/*
   fields:
     - service: backend
   fields_under_root: true

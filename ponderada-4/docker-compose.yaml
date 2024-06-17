@@ -5,7 +5,7 @@ services:
     build: ./auth/
     ports:
       - "8000:8000"
-    container_name: backend
+    container_name: backend-auth
     volumes:
       - ./logs:/app/logs
 
@@ -48,6 +48,9 @@ services:
     build: ./compra/
     ports:
       - "8001:8001"
+    container_name: backend-compra
+    volumes:
+      - ./logs:/app/logs
 
 
 volumes:

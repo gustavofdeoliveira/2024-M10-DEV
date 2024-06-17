@@ -13,4 +13,4 @@ RUN mkdir -p /logs && touch /logs/app.log
 
 EXPOSE 8000
 
-CMD ["fastapi", "run", "src/main.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["fastapi", "run", "src/main.py", "--host", "0.0.0.0", "--port", "8001"]
